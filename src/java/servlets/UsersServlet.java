@@ -41,8 +41,11 @@ public class UsersServlet extends HttpServlet
             throws ServletException, IOException
     {
         UserService us = new UserService();
-        List<User> usersList = null;
+        String action = request.getParameter("action");
         
+        doAction(request, response, action);        
+        
+        List<User> usersList = null;
         try
         {
             usersList = us.getAll();
@@ -50,8 +53,23 @@ public class UsersServlet extends HttpServlet
         {
             Logger.getLogger(UsersServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
         request.setAttribute("users", usersList);
         getServletContext().getRequestDispatcher("/WEB-INF/users.jsp").forward(request, response);
+    }
+
+    private void doAction(HttpServletRequest request, HttpServletResponse response, String action)
+    {
+        switch (action)
+        {
+            case "edit":
+               request.setAttribute("action", "User edited");
+               break;
+            case "delete":
+                request.setAttribute("action", "User deleted");
+                break;
+            case "reactivate":
+                request.setAttribute("action", "User reactivated");
+                break;
+        }
     }
 }

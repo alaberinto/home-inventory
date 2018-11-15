@@ -14,7 +14,10 @@
     </head>
     <body>
         <h1>Manage Users</h1>
-        <a href="login?logout">Log out.</a>
+
+        <a href="categories">Manage Categories</a>
+        <a href="inventory">Manage Inventory</a>
+        <a href="login?logout">Log out.</a><br>
         <table>
             <tr>
                 <th>First Name</th>
@@ -63,13 +66,16 @@
                     <td>
                         <c:if test="${!user.active}">
                             <form method="post">
-                            <input type="submit" value="Reactivate">
-                            <input type="hidden" name="action" value="reactivate">
-                        </form>
+                                <input type="submit" value="Reactivate">
+                                <input type="hidden" name="action" value="reactivate">
+                            </form>
                         </c:if>
                     </td>
                 </tr>
             </c:forEach>
         </table>
+        <br>
+        <br>
+        ${action}
     </body>
 </html>
