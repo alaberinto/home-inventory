@@ -36,7 +36,7 @@
                         <c:if test="${user.isAdmin}">
                             Admin
                         </c:if>
-                            <c:if test="${!user.isAdmin}">
+                        <c:if test="${!user.isAdmin}">
                             Regular User
                         </c:if>
                     </td>
@@ -44,8 +44,28 @@
                         <c:if test="${user.active}">
                             Active
                         </c:if>
-                            <c:if test="${!user.active}">
+                        <c:if test="${!user.active}">
                             Inactive
+                        </c:if>
+                    </td>
+                    <td>
+                        <form method="post">
+                            <input type="submit" value="Edit">
+                            <input type="hidden" name="action" value="edit">
+                        </form>
+                    </td>
+                    <td>
+                        <form method="post">
+                            <input type="submit" value="Delete">
+                            <input type="hidden" name="action" value="delete">
+                        </form>
+                    </td>
+                    <td>
+                        <c:if test="${!user.active}">
+                            <form method="post">
+                            <input type="submit" value="Reactivate">
+                            <input type="hidden" name="action" value="reactivate">
+                        </form>
                         </c:if>
                     </td>
                 </tr>
