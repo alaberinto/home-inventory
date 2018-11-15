@@ -18,7 +18,7 @@ import services.AccountService;
  *
  * @author 587568
  */
-public class AdminFilter implements Filter {
+public class AuthenticationFilter implements Filter {
     
     public void doFilter(ServletRequest request, ServletResponse response,
             FilterChain chain)
@@ -27,7 +27,7 @@ public class AdminFilter implements Filter {
             HttpServletRequest r = (HttpServletRequest)request;
             HttpSession session = r.getSession();
             
-            AccountService as = new AccountService();         
+            AccountService as = new AccountService();
     }
 
     @Override
