@@ -22,9 +22,12 @@ public class LoginServlet extends HttpServlet
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException 
     {
-        // more secure, logout if seeing login page
-        HttpSession session = request.getSession();
-        session.invalidate();
+        String access = request.getParameter("access");
+        
+        if(access != null)
+        {
+            request.setAttribute("message", "Not logged in.");
+        }
         
         getServletContext().getRequestDispatcher("/WEB-INF/login.jsp").forward(request, response);
     }
@@ -47,13 +50,14 @@ public class LoginServlet extends HttpServlet
         
         if(user != null)
         {
-            request.setAttribute("message", "lets fucking go!!!!!");
-            getServletContext().getRequestDispatcher("/WEB-INF/login.jsp").forward(request, response);
+            HttpSession session = request.getSession();
+            session.setAttribute("username", username);
+            response.sendRedirect("inventory");
             return;
         }
         else
         {
-            request.setAttribute("message", "HELL NAW DAWG");
+            request.setAttribute("message", "Invalid user credentials.");
             getServletContext().getRequestDispatcher("/WEB-INF/login.jsp").forward(request, response);
             return;
         }

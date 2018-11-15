@@ -1,8 +1,11 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package filters;
 
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
@@ -12,11 +15,10 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import services.AccountService;
 
 /**
  *
- * @author 587568
+ * @author awarsyle
  */
 public class AuthenticationFilter implements Filter {
     
@@ -24,10 +26,24 @@ public class AuthenticationFilter implements Filter {
             FilterChain chain)
             throws IOException, ServletException {
         
+            // this code will execute before HomeServlet and UsersServlet
             HttpServletRequest r = (HttpServletRequest)request;
             HttpSession session = r.getSession();
             
-            AccountService as = new AccountService();
+            if (session.getAttribute("username") != null) {
+                // if they are authenticated, i.e. have a username in the session,
+                // then allow them to continue on to the servlet
+                chain.doFilter(request, response);
+            } else {
+                // they do not have a username in the sesion
+                // so, send them to login page
+                HttpServletResponse resp = (HttpServletResponse)response;
+                resp.sendRedirect("login?access");
+            }
+            
+            // this code will execute after HomeServlet and UsersServlet
+            
+            
     }
 
     @Override

@@ -27,4 +27,9 @@ public class AccountService
         else
             return user;
     }
+    
+    public User get(String username) throws DBException
+    {
+        return userDB.getUser(username);
+    }
 }
