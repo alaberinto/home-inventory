@@ -13,5 +13,6 @@
     </head>
     <body>
         <h1>Manage Users</h1>
+        <a href="login?logout">Log out.</a>
     </body>
 </html>

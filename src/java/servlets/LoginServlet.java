@@ -23,10 +23,19 @@ public class LoginServlet extends HttpServlet
             throws ServletException, IOException 
     {
         String access = request.getParameter("access");
+        String logout = request.getParameter("logout");
         
         if(access != null)
         {
             request.setAttribute("message", "Not logged in.");
+        }
+        
+        if(logout != null)
+        {
+            HttpSession session = request.getSession();
+            session.removeAttribute("username");
+            session.invalidate();
+            request.setAttribute("message", "You have logged out successfully.");
         }
         
         getServletContext().getRequestDispatcher("/WEB-INF/login.jsp").forward(request, response);
@@ -48,11 +57,18 @@ public class LoginServlet extends HttpServlet
             Logger.getLogger(LoginServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        if(user != null)
+        if(user != null && !user.getIsAdmin())
         {
             HttpSession session = request.getSession();
             session.setAttribute("username", username);
             response.sendRedirect("inventory");
+            return;
+        }
+        else if (user != null && user.getIsAdmin())
+        {
+            HttpSession session = request.getSession();
+            session.setAttribute("username", username);
+            response.sendRedirect("users");
             return;
         }
         else
