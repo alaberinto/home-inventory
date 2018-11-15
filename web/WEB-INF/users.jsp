@@ -54,7 +54,7 @@
                     <td>
                         <form method="post">
                             <input type="submit" value="Edit">
-                            <input type="hidden" name="action" value="edit">
+                            <input type="hidden" name="action" value="pull">
                         </form>
                     </td>
                     <td>
@@ -77,5 +77,14 @@
         <br>
         <br>
         ${action}
+        
+        <h3>User Information</h3>
+        <form method="post">
+            First Name: <input type="text" value="${pulledFirst}"><br>
+            Last Name: <input type="text" value="${pulledLast}"><br>
+            Username: <input type="text" value="${pulledUsername}"><br>
+            Password: <input type="text" value="${pulledPassword}"><br>
+            Email: <input type="text" value="${pulledEmail}"><br>
+        </form>
     </body>
 </html>
