@@ -1,7 +1,7 @@
 package services;
 
 import dataaccess.DBException;
-import dataaccess.UserDB;
+import dataaccess.UsersDB;
 import datamodels.User;
 
 /**
@@ -10,16 +10,34 @@ import datamodels.User;
  */
 public class AccountService 
 {
-    private final UserDB userDB;
+    private final UsersDB userDB;
     
     public AccountService()
     {
-        userDB = new UserDB();
+        userDB = new UsersDB();
     }
     
     public User login(String username, String password) throws DBException
     {
-        return userDB.getUser(username);
+        User user = userDB.getUser(username);
+        user = checkActive(user);
+        user = checkPassword(user, password);
+        return user;
     }
 
+    private User checkActive(User user)
+    {
+        if(user.getActive())
+            return user;
+        else
+            return null;
+    }
+
+    private User checkPassword(User user, String password)
+    {
+        if(user.getPassword().equals(password))
+            return user;
+        else
+            return null;
+    }
 }

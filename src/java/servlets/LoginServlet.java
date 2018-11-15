@@ -1,6 +1,7 @@
 package servlets;
 
 import dataaccess.DBException;
+import datamodels.User;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -32,25 +33,29 @@ public class LoginServlet extends HttpServlet
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException
     {
+        String username = request.getParameter("username");
+        String password = request.getParameter("password");
+        User user = null;
+        AccountService as = new AccountService();
         try
-        {
-            String username = request.getParameter("username");
-            String password = request.getParameter("password");
-            
-            AccountService as = new AccountService();
-            if(as.login(username, password) != null)
-            {
-                HttpSession session = request.getSession();
-                session.setAttribute("username", username);
-                
-                request.setAttribute("message", "hehehe");
-                getServletContext().getRequestDispatcher("/WEB-INF/login.jsp").forward(request, response);
-            }
-            
-            getServletContext().getRequestDispatcher("/WEB-INF/login.jsp").forward(request, response);
+        {            
+            user = as.login(username, password);
         } catch (DBException ex)
         {
             Logger.getLogger(LoginServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        if(user != null)
+        {
+            request.setAttribute("message", "lets fucking go!!!!!");
+            getServletContext().getRequestDispatcher("/WEB-INF/login.jsp").forward(request, response);
+            return;
+        }
+        else
+        {
+            request.setAttribute("message", "HELL NAW DAWG");
+            getServletContext().getRequestDispatcher("/WEB-INF/login.jsp").forward(request, response);
+            return;
         }
     }
 }
