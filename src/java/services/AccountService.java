@@ -20,9 +20,7 @@ public class AccountService
     public User login(String username, String password) throws DBException
     {
         User user = userDB.getUser(username);
-        if(!user.getActive())
-            return null;
-        else if(!user.getPassword().equals(password))
+        if(!user.getPassword().equals(password))
             return null;
         else
             return user;

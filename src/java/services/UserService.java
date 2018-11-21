@@ -1,5 +1,6 @@
 package services;
 
+import dataaccess.DBException;
 import dataaccess.UsersDB;
 import datamodels.User;
 import java.util.List;
@@ -25,5 +26,10 @@ public class UserService
     public User getUser(String username) throws Exception 
     {
         return usersDB.get(username);
+    }
+
+    public int insert(User toAdd) throws Exception
+    {
+        return usersDB.insert(toAdd);
     }
 }

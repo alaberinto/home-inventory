@@ -57,7 +57,13 @@ public class LoginServlet extends HttpServlet
             Logger.getLogger(LoginServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        if(user != null && !user.getIsAdmin())
+        if(user != null && !user.getActive())
+        {
+            request.setAttribute("message", "User is not active.");
+            getServletContext().getRequestDispatcher("/WEB-INF/login.jsp").forward(request, response);
+            return;
+        }
+        else if(user != null && !user.getIsAdmin())
         {
             HttpSession session = request.getSession();
             session.setAttribute("username", username);
@@ -73,7 +79,7 @@ public class LoginServlet extends HttpServlet
         }
         else
         {
-            request.setAttribute("message", "Invalid user credentials.");
+            request.setAttribute("message", "Invalid login credentials.");
             getServletContext().getRequestDispatcher("/WEB-INF/login.jsp").forward(request, response);
             return;
         }

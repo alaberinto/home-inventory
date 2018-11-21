@@ -83,7 +83,7 @@
             <c:when test="${add == 1}">
                 <h3>Add User Information</h3>
             </c:when>
-                <c:when test="${add == 0}">
+            <c:when test="${add == 0}">
                 <h3>Edit User Information</h3>
             </c:when>
         </c:choose>
@@ -98,7 +98,7 @@
                     <input type="submit" value="Add">
                     <input type="hidden" name="action" value="insert">
                 </c:when>
-                    <c:when test="${add == 0}">
+                <c:when test="${add == 0}">
                     <input type="submit" value="Edit">
                     <input type="hidden" name="action" value="update">
                 </c:when>

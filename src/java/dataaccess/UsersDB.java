@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
 
 /**
  *
@@ -64,5 +65,26 @@ public class UsersDB
             em.close();
         }
     }
-    
+
+    public int insert(User toAdd) throws DBException
+    {
+        EntityManager em = DBUtil.getEmFactory().createEntityManager();
+        EntityTransaction trans = em.getTransaction();
+        
+        try
+        {
+            trans.begin();
+            em.persist(toAdd);
+            trans.commit();
+            return 1;
+        } catch (Exception ex)
+        {
+            trans.rollback();
+            Logger.getLogger(UsersDB.class.getName()).log(Level.SEVERE, "Cannot insert " + toAdd.toString(), ex);
+            throw new DBException("Error inserting user");
+        } finally
+        {
+            em.close();
+        }
+    }
 }
