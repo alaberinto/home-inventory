@@ -43,7 +43,6 @@ public class UsersServlet extends HttpServlet
     {
         UserService us = new UserService();
         String action = request.getParameter("action");
-        String selected = (String) request.getAttribute("selected");
 
         doAction(request, response, action);
 
@@ -69,13 +68,12 @@ public class UsersServlet extends HttpServlet
         String username = request.getParameter("givenUsername");
         String password = request.getParameter("givenPassword");
         String email = request.getParameter("givenEmail");
+        String selected = request.getParameter("selected");
         int row = 0;
         
         switch (action)
         {
-            case "pull":
-                String selected = request.getParameter("selected");
-                
+            case "pull":                
                 try
                 {
                     User toPull = us.getUser(selected);
@@ -93,7 +91,32 @@ public class UsersServlet extends HttpServlet
                 request.setAttribute("add", 0);
                 break;
             case "delete":
-                request.setAttribute("action", "User deleted");
+                try
+                {
+                    User toDelete = us.getUser(selected);
+                    
+                    if(toDelete.getUsername().equals(sessionUsername))
+                    {
+                        request.setAttribute("action", "Cannot delete yourself.");
+                    }
+                    else if(toDelete.getIsAdmin() && toDelete.getActive())
+                    {
+                        request.setAttribute("action", "Cannot delete an active admin.");
+                    }
+                    else
+                    {
+                        row = us.delete(toDelete);
+                    }
+                    
+                    if(row == 1)
+                        request.setAttribute("action", "User deleted");
+                    
+                } catch (Exception ex)
+                {
+                    Logger.getLogger(UsersServlet.class.getName()).log(Level.SEVERE, null, ex);
+                    request.setAttribute("action", "User could not be deleted.");
+                }
+                
                 request.setAttribute("add", 1);
                 break;
             case "reactivate":
@@ -104,6 +127,7 @@ public class UsersServlet extends HttpServlet
                 try
                 {
                     User toUpdate = us.getUser(username);
+                    
                     toUpdate.setFirstName(firstname);
                     toUpdate.setLastName(lastname);
                     toUpdate.setEmail(email);

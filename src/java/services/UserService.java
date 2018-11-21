@@ -37,4 +37,9 @@ public class UserService
     {
         return usersDB.update(toUpdate);
     }
+
+    public int delete(User toDelete) throws Exception
+    {        
+        return usersDB.delete(toDelete);
+    }
 }

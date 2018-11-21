@@ -62,6 +62,7 @@
                         <form method="post">
                             <input type="submit" value="Delete">
                             <input type="hidden" name="action" value="delete">
+                            <input type="hidden" name="selected" value="${user.username}"> 
                         </form>
                     </td>
                     <td>
