@@ -87,4 +87,26 @@ public class UsersDB
             em.close();
         }
     }
+
+    public int update(User toUpdate) throws DBException
+    {
+        EntityManager em = DBUtil.getEmFactory().createEntityManager();
+        EntityTransaction trans = em.getTransaction();
+        
+        try
+        {
+            trans.begin();
+            em.merge(toUpdate);
+            trans.commit();
+            return 1;
+        } catch (Exception ex)
+        {
+            trans.rollback();
+            Logger.getLogger(UsersDB.class.getName()).log(Level.SEVERE, "Cannot update " + toUpdate.toString(), ex);
+            throw new DBException("Error updating user");
+        } finally
+        {
+            em.close();
+        }
+    }
 }

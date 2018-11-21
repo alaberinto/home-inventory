@@ -32,4 +32,9 @@ public class UserService
     {
         return usersDB.insert(toAdd);
     }
+
+    public int update(User toUpdate) throws Exception
+    {
+        return usersDB.update(toUpdate);
+    }
 }

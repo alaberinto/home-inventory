@@ -63,16 +63,19 @@ public class UsersServlet extends HttpServlet
     {
         UserService us = new UserService();
         HttpSession session = request.getSession();
+        String sessionUsername = (String) session.getAttribute("username");
         String firstname = request.getParameter("givenFirst");
         String lastname = request.getParameter("givenLast");
         String username = request.getParameter("givenUsername");
         String password = request.getParameter("givenPassword");
         String email = request.getParameter("givenEmail");
+        int row = 0;
         
         switch (action)
         {
             case "pull":
                 String selected = request.getParameter("selected");
+                
                 try
                 {
                     User toPull = us.getUser(selected);
@@ -85,6 +88,7 @@ public class UsersServlet extends HttpServlet
                 {
                     Logger.getLogger(UsersServlet.class.getName()).log(Level.SEVERE, null, ex);
                 }
+                
                 request.setAttribute("action", "User information pulled.");
                 request.setAttribute("add", 0);
                 break;
@@ -97,16 +101,32 @@ public class UsersServlet extends HttpServlet
                 request.setAttribute("add", 1);
                 break;
             case "update":
-                request.setAttribute("action", "User edited");
+                try
+                {
+                    User toUpdate = us.getUser(username);
+                    toUpdate.setFirstName(firstname);
+                    toUpdate.setLastName(lastname);
+                    toUpdate.setEmail(email);
+                    toUpdate.setPassword(password);
+                    
+                    row = us.update(toUpdate);
+                } catch (Exception ex)
+                {
+                    Logger.getLogger(UsersServlet.class.getName()).log(Level.SEVERE, null, ex);
+                    request.setAttribute("action", "User could not be edited.");
+                }
+                
+                if (row == 1)
+                    request.setAttribute("action", "User edited.");
+                
                 request.setAttribute("add", 1);
                 break;
             case "insert":
-                User user = new User(username, password, email, firstname, lastname, true, false);
-                int row = 0;
+                User toAdd = new User(username, password, email, firstname, lastname, true, false);
                 
                 try
                 {
-                    row = us.insert(user);
+                    row = us.insert(toAdd);
                 } catch (Exception ex)
                 {
                     Logger.getLogger(UsersServlet.class.getName()).log(Level.SEVERE, null, ex);
