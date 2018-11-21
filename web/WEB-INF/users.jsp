@@ -95,7 +95,7 @@
                             <c:when test="${user.isAdmin}">
                                 <form method="post">
                                     <input type="submit" value="Demote">
-                                    <input type="hidden" name="action" value="Demote">
+                                    <input type="hidden" name="action" value="demote">
                                     <input type="hidden" name="selected" value="${user.username}"> 
                                 </form>
                             </c:when>

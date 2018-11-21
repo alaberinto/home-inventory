@@ -123,6 +123,45 @@ public class UsersServlet extends HttpServlet
                 
                 request.setAttribute("add", 1);
                 break;
+            case "update":
+                try
+                {
+                    User toUpdate = us.getUser(username);
+                    
+                    toUpdate.setFirstName(firstname);
+                    toUpdate.setLastName(lastname);
+                    toUpdate.setEmail(email);
+                    toUpdate.setPassword(password);
+                    
+                    row = us.update(toUpdate);
+                } catch (Exception ex)
+                {
+                    Logger.getLogger(UsersServlet.class.getName()).log(Level.SEVERE, null, ex);
+                    request.setAttribute("action", "User could not be edited.");
+                }
+                
+                if (row == 1)
+                    request.setAttribute("action", "User edited.");
+                
+                request.setAttribute("add", 1);
+                break;
+            case "insert":
+                User toAdd = new User(username, password, email, firstname, lastname, true, false);
+                
+                try
+                {
+                    row = us.insert(toAdd);
+                } catch (Exception ex)
+                {
+                    Logger.getLogger(UsersServlet.class.getName()).log(Level.SEVERE, null, ex);
+                    request.setAttribute("action", "User could not be added.");
+                }
+                
+                if (row == 1)
+                    request.setAttribute("action", "User added.");
+
+                request.setAttribute("add", 1);
+                break;
             case "reactivate":  
                 try
                 {
@@ -167,43 +206,12 @@ public class UsersServlet extends HttpServlet
                 
                 request.setAttribute("add", 1);
                 break;
-            case "update":
-                try
-                {
-                    User toUpdate = us.getUser(username);
-                    
-                    toUpdate.setFirstName(firstname);
-                    toUpdate.setLastName(lastname);
-                    toUpdate.setEmail(email);
-                    toUpdate.setPassword(password);
-                    
-                    row = us.update(toUpdate);
-                } catch (Exception ex)
-                {
-                    Logger.getLogger(UsersServlet.class.getName()).log(Level.SEVERE, null, ex);
-                    request.setAttribute("action", "User could not be edited.");
-                }
-                
-                if (row == 1)
-                    request.setAttribute("action", "User edited.");
-                
+            case "promote":
+                request.setAttribute("action", "User promoted to admin.");
                 request.setAttribute("add", 1);
                 break;
-            case "insert":
-                User toAdd = new User(username, password, email, firstname, lastname, true, false);
-                
-                try
-                {
-                    row = us.insert(toAdd);
-                } catch (Exception ex)
-                {
-                    Logger.getLogger(UsersServlet.class.getName()).log(Level.SEVERE, null, ex);
-                    request.setAttribute("action", "User could not be added.");
-                }
-                
-                if (row == 1)
-                    request.setAttribute("action", "User added.");
-
+            case "demote":
+                request.setAttribute("action", "User demoted to regular user.");
                 request.setAttribute("add", 1);
                 break;
         } 
