@@ -83,6 +83,24 @@
                             </c:when>
                         </c:choose>
                     </td>
+                    <td>
+                        <c:choose>
+                            <c:when test="${!user.isAdmin}">
+                                <form method="post">
+                                    <input type="submit" value="Promote">
+                                    <input type="hidden" name="action" value="promote">
+                                    <input type="hidden" name="selected" value="${user.username}"> 
+                                </form>
+                            </c:when>
+                            <c:when test="${user.isAdmin}">
+                                <form method="post">
+                                    <input type="submit" value="Demote">
+                                    <input type="hidden" name="action" value="Demote">
+                                    <input type="hidden" name="selected" value="${user.username}"> 
+                                </form>
+                            </c:when>
+                        </c:choose>
+                    </td>
                 </tr>
             </c:forEach>
         </table>
