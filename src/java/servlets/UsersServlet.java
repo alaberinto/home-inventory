@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import services.AccountService;
 import services.UserService;
 
 /**
@@ -62,6 +63,7 @@ public class UsersServlet extends HttpServlet
     private void doAction(HttpServletRequest request, HttpServletResponse response, String action)
     {
         UserService us = new UserService();
+        AccountService as = new AccountService();
         HttpSession session = request.getSession();
         String sessionUsername = (String) session.getAttribute("username");
         String firstname = request.getParameter("givenFirst");
@@ -127,7 +129,7 @@ public class UsersServlet extends HttpServlet
                     User toReactivate = us.getUser(selected);
                     toReactivate.setActive(true);
                     
-                    row = us.reactivate(toReactivate);
+                    row = as.reactivate(toReactivate);
                     
                     if(row == 1)
                         request.setAttribute("action", "User reactivated.");
@@ -152,7 +154,7 @@ public class UsersServlet extends HttpServlet
                     {
                         toDeactivate.setActive(false);
 
-                        row = us.deactivate(toDeactivate);
+                        row = as.deactivate(toDeactivate);
                     }
                     
                     if(row == 1)
