@@ -56,6 +56,7 @@ public class UsersServlet extends HttpServlet
         }
         request.setAttribute("users", usersList);
         getServletContext().getRequestDispatcher("/WEB-INF/users.jsp").forward(request, response);
+        return;
     }
 
     private void doAction(HttpServletRequest request, HttpServletResponse response, String action)
@@ -109,8 +110,9 @@ public class UsersServlet extends HttpServlet
                     }
                     
                     if(row == 1)
-                        request.setAttribute("action", "User deleted");
-                    
+                    {
+                        request.setAttribute("action", "User deleted.");
+                    }
                 } catch (Exception ex)
                 {
                     Logger.getLogger(UsersServlet.class.getName()).log(Level.SEVERE, null, ex);
@@ -119,8 +121,38 @@ public class UsersServlet extends HttpServlet
                 
                 request.setAttribute("add", 1);
                 break;
-            case "reactivate":
-                request.setAttribute("action", "User reactivated");
+            case "reactivate":  
+                try
+                {
+                    User toReactivate = us.getUser(selected);
+                    toReactivate.setActive(true);
+                    
+                    row = us.reactivate(toReactivate);
+                    
+                    if(row == 1)
+                        request.setAttribute("action", "User reactivated.");
+                } catch (Exception ex)
+                {
+                    Logger.getLogger(UsersServlet.class.getName()).log(Level.SEVERE, null, ex);
+                    request.setAttribute("action", "User could not be reactivated.");
+                }
+                
+                request.setAttribute("add", 1);
+                break;
+            case "deactivate":  
+                try
+                {
+                    User toDeactivate = us.getUser(selected);
+                    toDeactivate.setActive(false);
+                    
+                    row = us.deactivate(toDeactivate);
+                } catch (Exception ex)
+                {
+                    Logger.getLogger(UsersServlet.class.getName()).log(Level.SEVERE, null, ex);
+                    request.setAttribute("action", "User could not be deactivated.");
+                }
+                
+                request.setAttribute("action", "User deactivated.");
                 request.setAttribute("add", 1);
                 break;
             case "update":
@@ -162,7 +194,6 @@ public class UsersServlet extends HttpServlet
 
                 request.setAttribute("add", 1);
                 break;
-        }
-        
+        } 
     }
 }

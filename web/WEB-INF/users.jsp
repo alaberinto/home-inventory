@@ -66,12 +66,22 @@
                         </form>
                     </td>
                     <td>
-                        <c:if test="${!user.active}">
-                            <form method="post">
-                                <input type="submit" value="Reactivate">
-                                <input type="hidden" name="action" value="reactivate">
-                            </form>
-                        </c:if>
+                        <c:choose>
+                            <c:when test="${!user.active}">
+                                <form method="post">
+                                    <input type="submit" value="Reactivate">
+                                    <input type="hidden" name="action" value="reactivate">
+                                    <input type="hidden" name="selected" value="${user.username}"> 
+                                </form>
+                            </c:when>
+                            <c:when test="${user.active}">
+                                <form method="post">
+                                    <input type="submit" value="Deactivate">
+                                    <input type="hidden" name="action" value="deactivate">
+                                    <input type="hidden" name="selected" value="${user.username}"> 
+                                </form>
+                            </c:when>
+                        </c:choose>
                     </td>
                 </tr>
             </c:forEach>

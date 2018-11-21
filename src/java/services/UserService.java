@@ -42,4 +42,14 @@ public class UserService
     {        
         return usersDB.delete(toDelete);
     }
+
+    public int reactivate(User toReactivate) throws Exception
+    {
+        return usersDB.update(toReactivate);
+    }
+
+    public int deactivate(User toDeactivate) throws Exception
+    {
+        return usersDB.update(toDeactivate);
+    }
 }
