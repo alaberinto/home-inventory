@@ -55,6 +55,7 @@
                         <form method="post">
                             <input type="submit" value="Edit">
                             <input type="hidden" name="action" value="pull">
+                            <input type="hidden" name="selected" value="${user.username}"> 
                         </form>
                     </td>
                     <td>
@@ -77,14 +78,31 @@
         <br>
         <br>
         ${action}
-        
-        <h3>User Information</h3>
+
+        <c:choose>
+            <c:when test="${add == 1}">
+                <h3>Add User Information</h3>
+            </c:when>
+                <c:when test="${add == 0}">
+                <h3>Edit User Information</h3>
+            </c:when>
+        </c:choose>
         <form method="post">
-            First Name: <input type="text" value="${pulledFirst}"><br>
-            Last Name: <input type="text" value="${pulledLast}"><br>
-            Username: <input type="text" value="${pulledUsername}"><br>
-            Password: <input type="text" value="${pulledPassword}"><br>
-            Email: <input type="text" value="${pulledEmail}"><br>
+            First Name: <input type="text" name="givenFirst" value="${pulledFirst}"><br>
+            Last Name: <input type="text" name="givenLast" value="${pulledLast}"><br>
+            Username: <input type="text" name="givenUsername" value="${pulledUsername}"><br>
+            Password: <input type="text" name="givenPassword" value="${pulledPassword}"><br>
+            Email: <input type="text" name="givenEmail" value="${pulledEmail}"><br>
+            <c:choose>
+                <c:when test="${add == 1}">
+                    <input type="submit" value="Add">
+                    <input type="hidden" name="action" value="insert">
+                </c:when>
+                    <c:when test="${add == 0}">
+                    <input type="submit" value="Edit">
+                    <input type="hidden" name="action" value="update">
+                </c:when>
+            </c:choose>
         </form>
     </body>
 </html>

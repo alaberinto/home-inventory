@@ -33,6 +33,7 @@ public class UsersServlet extends HttpServlet
         }
 
         request.setAttribute("users", usersList);
+        request.setAttribute("add", 1);
         getServletContext().getRequestDispatcher("/WEB-INF/users.jsp").forward(request, response);
     }
 
@@ -42,6 +43,7 @@ public class UsersServlet extends HttpServlet
     {
         UserService us = new UserService();
         String action = request.getParameter("action");
+        String selected = (String) request.getAttribute("selected");
 
         doAction(request, response, action);
 
@@ -64,10 +66,10 @@ public class UsersServlet extends HttpServlet
         switch (action)
         {
             case "pull":
-                String username = (String) session.getAttribute("username");
+                String selected = request.getParameter("selected");
                 try
                 {
-                    User toPull = us.getUser(username);
+                    User toPull = us.getUser(selected);
                     request.setAttribute("pulledFirst", toPull.getFirstName());
                     request.setAttribute("pulledLast", toPull.getLastName());
                     request.setAttribute("pulledUsername", toPull.getUsername());
@@ -77,16 +79,29 @@ public class UsersServlet extends HttpServlet
                 {
                     Logger.getLogger(UsersServlet.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                request.setAttribute("action", "User info pulled");
+                request.setAttribute("action", "User information pulled.");
+                request.setAttribute("add", 0);
                 break;
             case "delete":
                 request.setAttribute("action", "User deleted");
+                request.setAttribute("add", 1);
                 break;
             case "reactivate":
                 request.setAttribute("action", "User reactivated");
+                request.setAttribute("add", 1);
                 break;
             case "update":
+                String firstname = request.getParameter("givenFirst");
+                String lastname = request.getParameter("givenLast");
+                String username = request.getParameter("givenUsername");
+                String password = request.getParameter("givenPassword");
+                String email = request.getParameter("givenEmail");
                 request.setAttribute("action", "User edited");
+                request.setAttribute("add", 1);
+                break;
+            case "insert":
+                request.setAttribute("action", "User added.");
+                request.setAttribute("add", 1);
                 break;
         }
         
