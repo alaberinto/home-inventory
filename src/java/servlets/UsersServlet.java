@@ -103,15 +103,19 @@ public class UsersServlet extends HttpServlet
             case "insert":
                 User user = new User(username, password, email, firstname, lastname, true, false);
                 int row = 0;
+                
                 try
                 {
                     row = us.insert(user);
                 } catch (Exception ex)
                 {
                     Logger.getLogger(UsersServlet.class.getName()).log(Level.SEVERE, null, ex);
+                    request.setAttribute("action", "User could not be added.");
                 }
                 
-                request.setAttribute("action", "User added.");
+                if (row == 1)
+                    request.setAttribute("action", "User added.");
+
                 request.setAttribute("add", 1);
                 break;
         }
