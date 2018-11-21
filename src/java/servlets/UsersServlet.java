@@ -143,16 +143,26 @@ public class UsersServlet extends HttpServlet
                 try
                 {
                     User toDeactivate = us.getUser(selected);
-                    toDeactivate.setActive(false);
                     
-                    row = us.deactivate(toDeactivate);
+                    if(toDeactivate.getUsername().equals(sessionUsername))
+                    {
+                        request.setAttribute("action", "Cannot deactivate yourself.");
+                    }
+                    else
+                    {
+                        toDeactivate.setActive(false);
+
+                        row = us.deactivate(toDeactivate);
+                    }
+                    
+                    if(row == 1)
+                        request.setAttribute("action", "User deactivated.");
                 } catch (Exception ex)
                 {
                     Logger.getLogger(UsersServlet.class.getName()).log(Level.SEVERE, null, ex);
                     request.setAttribute("action", "User could not be deactivated.");
                 }
                 
-                request.setAttribute("action", "User deactivated.");
                 request.setAttribute("add", 1);
                 break;
             case "update":
