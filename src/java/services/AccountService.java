@@ -17,7 +17,7 @@ public class AccountService
         usersDB = new UsersDB();
     }
     
-    public User login(String username, String password) throws DBException
+    public User login(String username, String password) throws Exception
     {
         User user = usersDB.getUser(username);
         if(!user.getPassword().equals(password))
@@ -26,7 +26,7 @@ public class AccountService
             return user;
     }
     
-    public User get(String username) throws DBException
+    public User get(String username) throws Exception
     {
         return usersDB.getUser(username);
     }
@@ -39,5 +39,15 @@ public class AccountService
     public int deactivate(User toDeactivate) throws Exception
     {
         return usersDB.update(toDeactivate);
+    }
+
+    public int promote(User toPromote) throws Exception
+    {
+        return usersDB.update(toPromote);
+    }
+
+    public int demote(User toDemote) throws Exception
+    {
+        return usersDB.update(toDemote);
     }
 }

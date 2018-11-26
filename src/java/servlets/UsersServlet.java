@@ -207,11 +207,43 @@ public class UsersServlet extends HttpServlet
                 request.setAttribute("add", 1);
                 break;
             case "promote":
-                request.setAttribute("action", "User promoted to admin.");
+                try
+                {
+                    User toPromote = us.getUser(selected);
+                    
+                        toPromote.setIsAdmin(true);
+                        row = as.promote(toPromote);
+                    
+                    if(row == 1)
+                        request.setAttribute("action", "User promoted to admin.");
+                } catch (Exception ex)
+                {
+                    Logger.getLogger(UsersServlet.class.getName()).log(Level.SEVERE, null, ex);
+                }
                 request.setAttribute("add", 1);
                 break;
             case "demote":
-                request.setAttribute("action", "User demoted to regular user.");
+                try
+                {
+                    User toDemote = us.getUser(selected);
+
+                    if(toDemote.getUsername().equals(sessionUsername))
+                    {
+                        request.setAttribute("action", "Cannot demote yourself.");
+                    }
+                    else
+                    {
+                        toDemote.setIsAdmin(false);
+
+                        row = as.demote(toDemote);
+                    }
+                    
+                    if(row == 1)
+                        request.setAttribute("action", "User demoted to regular user.");
+                } catch (Exception ex)
+                {
+                    Logger.getLogger(UsersServlet.class.getName()).log(Level.SEVERE, null, ex);
+                }
                 request.setAttribute("add", 1);
                 break;
         } 
