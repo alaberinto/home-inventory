@@ -13,6 +13,16 @@
     </head>
     <body>
         <h1>Manage Account</h1>
-        <a href="login?logout">Log out.</a>
+        <a href="inventory">User Inventory</a><br>
+        <a href="login?logout">Log out.</a><br><br>
+        
+        <form method="post">
+            <h2> Edit Account Information</h2>
+            First Name: <input type="text" value="${first}"><br>
+            Last Name: <input type="text" value="${last}"><br>
+            Email: <input type="text" value="${email}"><br>
+            Password: <input type="text" value="${password}"><br>
+            <input type="submit" value="Change User Information">
+        </form>
     </body>
 </html>
