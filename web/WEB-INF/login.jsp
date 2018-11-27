@@ -19,6 +19,10 @@
             <input type="submit" value="Log In">
             <br>
             ${message}
+            <br>
+            <br>
         </form>
+        
+            New user? <a href="register">Register</a> now!
     </body>
 </html>

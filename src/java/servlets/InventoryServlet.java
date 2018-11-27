@@ -16,6 +16,12 @@ public class InventoryServlet extends HttpServlet
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException 
     {
+        String registered = request.getParameter("registered");
+        
+        if(registered != null)
+        {
+            request.setAttribute("message", "User registered successfully!");
+        }
         getServletContext().getRequestDispatcher("/WEB-INF/inventory.jsp").forward(request, response);
     }
     

@@ -1,6 +1,5 @@
 package services;
 
-import dataaccess.DBException;
 import dataaccess.UsersDB;
 import datamodels.User;
 
@@ -49,5 +48,47 @@ public class AccountService
     public int demote(User toDemote) throws Exception
     {
         return usersDB.update(toDemote);
+    }
+
+    public int register(User toAdd) throws Exception
+    {
+        return usersDB.insert(toAdd);
+    }
+    
+    public int checkBlank(User user)
+    {
+        if(user.getUsername() == null || user.getUsername().equals(""))
+            return 0;
+        
+        if(user.getFirstName() == null || user.getFirstName().equals(""))
+            return 0;
+        
+        if(user.getLastName() == null || user.getLastName().equals(""))
+            return 0;
+        
+        if(user.getEmail() == null || user.getEmail().equals(""))
+            return 0;
+        
+        return 1;
+    }
+
+    public int checkUsername(User user) throws Exception
+    {
+        UserService us = new UserService();
+        User toCheck = us.getUser(user.getUsername());
+        
+        if(toCheck == null)
+        {
+            return 1;
+        }
+        
+        if(toCheck.getUsername().equals(user.getUsername()))
+        {
+            return 0;
+        }
+        else
+        {
+            return 1;
+        }
     }
 }

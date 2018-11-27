@@ -13,6 +13,7 @@
     </head>
     <body>
         <h1>Inventory</h1>
-        <a href="login?logout">Log out.</a>
+        <a href="login?logout">Log out.</a><br>
+        ${message}
     </body>
 </html>

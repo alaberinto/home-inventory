@@ -23,7 +23,13 @@ public class LoginServlet extends HttpServlet
             throws ServletException, IOException 
     {
         String access = request.getParameter("access");
+        String registered = request.getParameter("registered");
         String logout = request.getParameter("logout");
+        
+        if(registered != null)
+        {
+            request.setAttribute("message", "User registered successfully!");
+        }
         
         if(access != null)
         {
@@ -52,8 +58,7 @@ public class LoginServlet extends HttpServlet
         try
         {            
             user = as.login(username, password);
-        } catch (DBException ex)
-        {
+        } catch (Exception ex) {
             Logger.getLogger(LoginServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
         
