@@ -44,6 +44,48 @@ public class AccountServlet extends HttpServlet
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException
     {
+        int row = 0;
+        HttpSession session = request.getSession();
+        UserService us = new UserService();
+        User sessionUser = null;
+        String action = request.getParameter("action");
+        
+        String first = request.getParameter("editfirst");
+        String last = request.getParameter("editlast");
+        String email = request.getParameter("editemail");
+        String password = request.getParameter("editpass");
+        
+        if(action != null && action.equals("edit"))
+        {
+            try
+            {
+                User toUpdate = us.getUser((String) session.getAttribute("username"));
+                
+                toUpdate.setFirstName(first);
+                toUpdate.setLastName(last);
+                toUpdate.setEmail(email);
+                toUpdate.setPassword(password);
+                
+                row = us.update(toUpdate);
+                
+                sessionUser = us.getUser((String) session.getAttribute("username"));
+            } catch (Exception ex)
+            {
+                Logger.getLogger(AccountServlet.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+            
+        request.setAttribute("username", sessionUser.getUsername());
+        request.setAttribute("first", sessionUser.getFirstName());
+        request.setAttribute("last", sessionUser.getLastName());
+        request.setAttribute("email", sessionUser.getEmail());
+        request.setAttribute("password", sessionUser.getPassword());
+        
+        if(row == 1)
+            request.setAttribute("message", "User edited successfully!");
+        else
+            request.setAttribute("message", "Could not edit user.");
+        
         getServletContext().getRequestDispatcher("/WEB-INF/account.jsp").forward(request, response);
     }
 }

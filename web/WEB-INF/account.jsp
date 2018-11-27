@@ -18,11 +18,13 @@
         
         <form method="post">
             <h2> Edit Account Information</h2>
-            First Name: <input type="text" value="${first}"><br>
-            Last Name: <input type="text" value="${last}"><br>
-            Email: <input type="text" value="${email}"><br>
-            Password: <input type="text" value="${password}"><br>
+            First Name: <input type="text" name="editfirst" value="${first}"><br>
+            Last Name: <input type="text" name="editlast" value="${last}"><br>
+            Email: <input type="text" name="editemail" value="${email}"><br>
+            Password: <input type="text" name="editpass" value="${password}"><br>
             <input type="submit" value="Change User Information">
+            <input type="hidden" name="action" value="edit">
+            ${message}
         </form>
     </body>
 </html>
