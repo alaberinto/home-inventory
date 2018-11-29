@@ -16,8 +16,26 @@ import javax.persistence.EntityTransaction;
  *
  * @author 587568
  */
-public class ItemsDB {
-
+public class ItemsDB
+{
+    public Item getItem(int id) throws DBException
+    {
+        EntityManager em = DBUtil.getEmFactory().createEntityManager();
+       
+        try
+        {
+            Item item = em.find(Item.class, id);
+            return item;
+        } catch (Exception ex)
+        {
+            Logger.getLogger(ItemsDB.class.getName()).log(Level.SEVERE, "Cannot read item", ex);
+            throw new DBException("Error getting item.");
+        } finally
+        {
+            em.close();
+        }
+    }
+    
     public List<Item> getAllItems() throws DBException
     {
         EntityManager em = DBUtil.getEmFactory().createEntityManager();
@@ -56,6 +74,5 @@ public class ItemsDB {
         {
             em.close();
         }
-    }
-    
+    }    
 }

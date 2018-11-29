@@ -43,6 +43,7 @@ public class InventoryServlet extends HttpServlet
         
         request.setAttribute("categories", categoryList);
         request.setAttribute("items", itemList);
+        request.setAttribute("add", 1);
         getServletContext().getRequestDispatcher("/WEB-INF/inventory.jsp").forward(request, response);
     }
     
@@ -79,6 +80,8 @@ public class InventoryServlet extends HttpServlet
         UserService us = new UserService();
         HttpSession session = request.getSession();
         int row = 0;
+        
+        String selected = request.getParameter("selected");
         switch (action)
         {
             case "additem":
@@ -119,7 +122,21 @@ public class InventoryServlet extends HttpServlet
                 {
                     Logger.getLogger(InventoryServlet.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                
+                request.setAttribute("add", 1);
+                break;
+            case "pullitem":
+                try
+                {
+                    Item toEdit = inv.getItem(selected);
+                    
+                    request.setAttribute("editcategory", toEdit.getCategory().getCategoryName());
+                    request.setAttribute("editname", toEdit.getItemName());
+                    request.setAttribute("editprice", toEdit.getPrice());
+                } catch (Exception ex)
+                {
+                    Logger.getLogger(InventoryServlet.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                request.setAttribute("add", 0);
                 break;
         }
     }

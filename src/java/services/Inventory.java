@@ -45,4 +45,10 @@ public class Inventory
     {
         return itemsDB.insert(toAdd);
     }
+
+    public Item getItem(String selected) throws Exception
+    {
+        int id = Integer.parseInt(selected);
+        return itemsDB.getItem(id);
+    }
 }

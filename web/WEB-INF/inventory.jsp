@@ -26,46 +26,61 @@
             </tr>
             <c:forEach var="item" items="${items}">
                 <c:if test="${item.owner.username == username}">
-                <tr>
-                    <td>${item.itemID}</td>
-                    <td>${item.itemName}</td>
-                    <td>${item.category.categoryName}</td>
-                    <td><fmt:formatNumber value = "${item.price}" type = "currency"/></td>
-                    <td>
-                        <form method="post">
-                            <input type="submit" value="Edit">
-                            <input type="hidden" name="action" value="pull">
-                            <input type="hidden" name="selected" value="${item.itemID}"> 
-                        </form>
-                    </td>
-                    <td>
-                        <form method="post">
-                            <input type="submit" value="Delete">
-                            <input type="hidden" name="action" value="delete">
-                            <input type="hidden" name="selected" value="${item.itemID}"> 
-                        </form>
-                    </td>
-                </tr>
+                    <tr>
+                        <td>${item.itemID}</td>
+                        <td>${item.itemName}</td>
+                        <td>${item.category.categoryName}</td>
+                        <td><fmt:formatNumber value = "${item.price}" type = "currency"/></td>
+                        <td>
+                            <form method="post">
+                                <input type="submit" value="Edit">
+                                <input type="hidden" name="action" value="pullitem">
+                                <input type="hidden" name="selected" value="${item.itemID}"> 
+                            </form>
+                        </td>
+                        <td>
+                            <form method="post">
+                                <input type="submit" value="Delete">
+                                <input type="hidden" name="action" value="deleteitem">
+                                <input type="hidden" name="selected" value="${item.itemID}"> 
+                            </form>
+                        </td>
+                    </tr>
                 </c:if>
             </c:forEach>
         </table>
         <br>
         <br>
         ${message}
-        
-        <h3>Add Item</h3>
-         <form method="post">
-             Category:
-             <select name="category" value="${category}">
-                 <c:forEach var="category" items="${categories}">
-                    <option name="category" value="${category.categoryName}">${category.categoryName}</option>
+
+        <c:choose>
+            <c:when test="${add == 1}">
+                <h3>Add Item</h3>
+            </c:when>
+            <c:when test="${add == 0}">
+                <h3>Edit Item</h3>
+            </c:when>
+        </c:choose>
+        <form method="post">
+            Category:
+            <select name="category" value="${category}">
+                <c:forEach var="category" items="${categories}">
+                    <option name="category" value="${category.categoryName}" ${category.categoryName == editcategory ? 'selected' : ''}>${category.categoryName}</option>
                 </c:forEach>
-             </select>
-             <br>
-            Item Name: <input type="text" name="itemname"><br>
-            Price: <input type="text" name="itemprice"><br>
-            <input type="submit" value="Add Item">
-            <input type="hidden" name="action" value="additem">
-         </form>
+            </select>
+            <br>
+            Item Name: <input type="text" name="itemname" value="${editname}"><br>
+            Price: <input type="text" name="itemprice" value="${editprice}"><br>
+            <c:choose>
+                <c:when test="${add == 1}">
+                    <input type="submit" value="Add Item">
+                    <input type="hidden" name="action" value="additem">
+                </c:when>
+                <c:when test="${add == 0}">
+                    <input type="submit" value="Edit Item">
+                    <input type="hidden" name="action" value="edititem">
+                </c:when>
+            </c:choose>
+        </form>
     </body>
 </html>
