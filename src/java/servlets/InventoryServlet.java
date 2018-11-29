@@ -189,6 +189,25 @@ public class InventoryServlet extends HttpServlet
                 
                 request.setAttribute("add", 1);
                 break;
+            case "deleteitem":
+                try
+                {
+                    Item toDelete = inv.getItem(selected);
+                    
+                    sessionUsername = (String) session.getAttribute("username");
+                    
+                    row = inv.delete(toDelete, sessionUsername);
+                    
+                    if(row == 1)
+                        request.setAttribute("message", "Item deleted.");
+                    else
+                        request.setAttribute("message", "Item was not deleted.");
+                } catch (Exception ex)
+                {
+                    Logger.getLogger(InventoryServlet.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                request.setAttribute("add", 1);
+                break;
         }
     }
 

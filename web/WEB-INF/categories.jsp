@@ -4,6 +4,7 @@
     Author     : 587568
 --%>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -14,5 +15,17 @@
     <body>
         <h1>Manage Categories</h1>
         <a href="login?logout">Log out.</a>
+        <table>
+            <tr>
+                <th>Category ID</th>
+                <th>Category Name</th>
+            </tr>
+            <c:forEach var="category" items="${categories}">
+                <tr>
+                    <td>${category.categoryID}</td>
+                    <td>${category.categoryName}</td>
+                </tr>
+            </c:forEach>
+        </table>
     </body>
 </html>

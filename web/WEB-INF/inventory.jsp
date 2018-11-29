@@ -11,7 +11,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Inventory Page</title>
+        <title>Manage Inventory</title>
     </head>
     <body>
         <h1>Inventory</h1>

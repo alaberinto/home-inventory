@@ -97,4 +97,26 @@ public class ItemsDB
             em.close();
         }
     }
+
+    public int delete(Item toDelete) throws DBException
+    {
+        EntityManager em = DBUtil.getEmFactory().createEntityManager();
+        EntityTransaction trans = em.getTransaction();
+        
+        try
+        {
+            trans.begin();
+            em.remove(em.merge(toDelete));
+            trans.commit();
+            return 1;
+        } catch (Exception ex)
+        { 
+            trans.rollback();
+            Logger.getLogger(ItemsDB.class.getName()).log(Level.SEVERE, "Cannot delete " + toDelete.toString(), ex);
+            throw new DBException("Error deleting user");
+        } finally
+        {
+            em.close();
+        }
+    }
 }

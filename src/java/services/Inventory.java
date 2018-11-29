@@ -60,4 +60,13 @@ public class Inventory
         }
         return itemsDB.update(toEdit);
     }
+
+    public int delete(Item toDelete, String sessionUsername) throws Exception
+    {
+        if(!toDelete.getOwner().getUsername().equals(sessionUsername))
+        {
+            return 0;
+        }
+        return itemsDB.delete(toDelete);
+    }
 }
