@@ -26,5 +26,9 @@
             <input type="hidden" name="action" value="edit"><br>
             ${message}
         </form>
+        <form method="post">
+            <input type="submit" value="Deactivate account">
+            <input type="hidden" name="action" value="deactivate"><br>
+        </form>
     </body>
 </html>

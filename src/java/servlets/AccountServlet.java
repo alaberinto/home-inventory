@@ -74,6 +74,20 @@ public class AccountServlet extends HttpServlet
                 Logger.getLogger(AccountServlet.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+        else if(action != null && action.equals("deactivate"))
+        {
+            try
+            {
+                User toUpdate = us.getUser((String) session.getAttribute("username"));
+                toUpdate.setActive(false);
+                row = us.update(toUpdate);
+                response.sendRedirect("login?logout=inactive");
+                return;
+            } catch (Exception ex)
+            {
+                Logger.getLogger(AccountServlet.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
             
         request.setAttribute("username", sessionUser.getUsername());
         request.setAttribute("first", sessionUser.getFirstName());

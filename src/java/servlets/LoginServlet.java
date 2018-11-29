@@ -22,6 +22,7 @@ public class LoginServlet extends HttpServlet
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException 
     {
+        HttpSession session = request.getSession();
         String access = request.getParameter("access");
         String registered = request.getParameter("registered");
         String logout = request.getParameter("logout");
@@ -36,9 +37,14 @@ public class LoginServlet extends HttpServlet
             request.setAttribute("message", "Not logged in.");
         }
         
-        if(logout != null)
+        if(logout != null && logout.equals("inactive"))
         {
-            HttpSession session = request.getSession();
+            session.removeAttribute("username");
+            session.invalidate();
+            request.setAttribute("message", "You have deactivated your account.");
+        }
+        else if (logout != null)
+        {
             session.removeAttribute("username");
             session.invalidate();
             request.setAttribute("message", "You have logged out successfully.");

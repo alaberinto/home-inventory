@@ -190,7 +190,6 @@ public class UsersServlet extends HttpServlet
                     else
                     {
                         toDeactivate.setActive(false);
-
                         row = as.deactivate(toDeactivate);
                     }
                     
