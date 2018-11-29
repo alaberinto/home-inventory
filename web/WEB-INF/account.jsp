@@ -13,6 +13,9 @@
     </head>
     <body>
         <h1>Manage Account</h1>
+        <h2>Hello, ${username}!</h2>
+        <a href="categories">Manage Categories</a><br>
+        <a href="users">Manage Users</a><br>
         <a href="inventory">User Inventory</a><br>
         <a href="login?logout">Log out.</a><br><br>
         
