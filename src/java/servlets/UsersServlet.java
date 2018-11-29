@@ -97,21 +97,19 @@ public class UsersServlet extends HttpServlet
                 try
                 {
                     User toDelete = us.getUser(selected);
+                    row = us.delete(toDelete, sessionUsername);
                     
-                    if(toDelete.getUsername().equals(sessionUsername))
+                    //deleting self
+                    if(row == -1)
                     {
                         request.setAttribute("action", "Cannot delete yourself.");
                     }
-                    else if(toDelete.getIsAdmin() && toDelete.getActive())
+                    //deleting active admin
+                    else if(row == -2)
                     {
-                        request.setAttribute("action", "Cannot delete an active admin.");
+                        request.setAttribute("action", "Could not delete an active admin.");
                     }
                     else
-                    {
-                        row = us.delete(toDelete);
-                    }
-                    
-                    if(row == 1)
                     {
                         request.setAttribute("action", "User deleted.");
                     }

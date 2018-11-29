@@ -38,8 +38,20 @@ public class UserService
         return usersDB.update(toUpdate);
     }
 
-    public int delete(User toDelete) throws Exception
+    public int delete(User toDelete, String sessionUsername) throws Exception
     {        
+        User user = usersDB.getUser(sessionUsername);
+        
+        //deleting self
+        if(toDelete.getUsername().equals(sessionUsername))
+        {
+            return -1;
+        }
+        else if(toDelete.getIsAdmin() && toDelete.getActive())
+        {
+            return -2;
+        }
+        
         return usersDB.delete(toDelete);
     }
 }

@@ -23,7 +23,7 @@
             Email: <input type="text" name="editemail" value="${email}"><br>
             Password: <input type="text" name="editpass" value="${password}"><br>
             <input type="submit" value="Change User Information">
-            <input type="hidden" name="action" value="edit">
+            <input type="hidden" name="action" value="edit"><br>
             ${message}
         </form>
     </body>
