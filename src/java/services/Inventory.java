@@ -7,6 +7,8 @@ package services;
 
 import dataaccess.CategoriesDB;
 import dataaccess.ItemsDB;
+import datamodels.Item;
+import java.util.List;
 
 /**
  *
@@ -21,5 +23,10 @@ public class Inventory
     {
         itemsDB = new ItemsDB();
         categoriesDB = new CategoriesDB();
+    }
+
+    public List<Item> getAllItems() throws Exception
+    {
+        return itemsDB.getAllItems();
     }
 }
