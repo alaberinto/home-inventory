@@ -35,4 +35,14 @@ public class Inventory
     {
         return categoriesDB.getAllCategories();
     }
+    
+    public Category getCategory(String name) throws Exception
+    {
+        return categoriesDB.getCategory(name);
+    }
+    
+    public int insert(Item toAdd) throws Exception
+    {
+        return itemsDB.insert(toAdd);
+    }
 }

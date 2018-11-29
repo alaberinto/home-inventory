@@ -25,6 +25,7 @@
                 <th>Price</th>
             </tr>
             <c:forEach var="item" items="${items}">
+                <c:if test="${item.owner.username == username}">
                 <tr>
                     <td>${item.itemID}</td>
                     <td>${item.itemName}</td>
@@ -45,11 +46,12 @@
                         </form>
                     </td>
                 </tr>
+                </c:if>
             </c:forEach>
         </table>
         <br>
         <br>
-        ${action}
+        ${message}
         
         <h3>Add Item</h3>
          <form method="post">

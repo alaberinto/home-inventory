@@ -35,5 +35,22 @@ public class CategoriesDB
             em.close();
         }
     }
+
+    public Category getCategory(String name) throws DBException
+    {
+        EntityManager em = DBUtil.getEmFactory().createEntityManager();
+        try
+        {
+            Category findCategory = em.createNamedQuery("Category.findByCategoryName", Category.class).setParameter("categoryName", name).getSingleResult();
+            return findCategory;
+        } catch (Exception ex)
+        {
+            Logger.getLogger(CategoriesDB.class.getName()).log(Level.SEVERE, "Cannot read category", ex);
+            throw new DBException("Error getting category");
+        } finally
+        {
+            em.close();
+        }
+    }
     
 }
