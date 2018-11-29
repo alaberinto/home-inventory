@@ -30,8 +30,40 @@
                     <td>${item.itemName}</td>
                     <td>${item.category.categoryName}</td>
                     <td><fmt:formatNumber value = "${item.price}" type = "currency"/></td>
+                    <td>
+                        <form method="post">
+                            <input type="submit" value="Edit">
+                            <input type="hidden" name="action" value="pull">
+                            <input type="hidden" name="selected" value="${item.itemID}"> 
+                        </form>
+                    </td>
+                    <td>
+                        <form method="post">
+                            <input type="submit" value="Delete">
+                            <input type="hidden" name="action" value="delete">
+                            <input type="hidden" name="selected" value="${item.itemID}"> 
+                        </form>
+                    </td>
                 </tr>
             </c:forEach>
         </table>
+        <br>
+        <br>
+        ${action}
+        
+        <h3>Add Item</h3>
+         <form method="post">
+             Category:
+             <select name="category" value="${category}">
+                 <c:forEach var="category" items="${categories}">
+                    <option name="category" value="${category.categoryName}">${category.categoryName}</option>
+                </c:forEach>
+             </select>
+             <br>
+            Item Name: <input type="text" name="itemname"><br>
+            Price: <input type="text" name="itemprice"><br>
+            <input type="submit" value="Add Item">
+            <input type="hidden" name="action" value="additem">
+         </form>
     </body>
 </html>
