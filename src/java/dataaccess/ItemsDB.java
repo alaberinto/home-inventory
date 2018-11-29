@@ -75,4 +75,26 @@ public class ItemsDB
             em.close();
         }
     }    
+
+    public int update(Item toEdit) throws DBException
+    {
+        EntityManager em = DBUtil.getEmFactory().createEntityManager();
+        EntityTransaction trans = em.getTransaction();
+        
+        try
+        {
+            trans.begin();
+            em.merge(toEdit);
+            trans.commit();
+            return 1;
+        } catch (Exception ex)
+        {
+            trans.rollback();
+            Logger.getLogger(ItemsDB.class.getName()).log(Level.SEVERE, "Cannot update " + toEdit.toString(), ex);
+            throw new DBException("Error updating item");
+        } finally
+        {
+            em.close();
+        }
+    }
 }

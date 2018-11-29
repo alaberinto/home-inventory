@@ -78,8 +78,10 @@ public class InventoryServlet extends HttpServlet
     {
         Inventory inv = new Inventory();
         UserService us = new UserService();
+        String sessionUsername;
         HttpSession session = request.getSession();
         int row = 0;
+        Category newCategory = null;
         
         String selected = request.getParameter("selected");
         switch (action)
@@ -92,19 +94,20 @@ public class InventoryServlet extends HttpServlet
                 if(checkBlank(name, price))
                 {
                     request.setAttribute("message", "Item fields are blank.");
+                    request.setAttribute("add", 1);
                     return;
                 }
                 
                 if(checkPrice(price))
                 {
                     request.setAttribute("message", "Please enter a number.");
+                    request.setAttribute("add", 1);
                     return;
                 }
                 
                 Item newItem = new Item();
-                Category newCategory = null;
                 User owner = null;
-                String sessionUsername = (String) session.getAttribute("username");
+                sessionUsername = (String) session.getAttribute("username");
                 try
                 {
                     newCategory = inv.getCategory(category);
@@ -118,6 +121,8 @@ public class InventoryServlet extends HttpServlet
                     row = inv.insert(newItem);
                     if(row == 1)
                         request.setAttribute("message", "Item added.");
+                    else
+                        request.setAttribute("message", "Item was not added.");
                 } catch (Exception ex)
                 {
                     Logger.getLogger(InventoryServlet.class.getName()).log(Level.SEVERE, null, ex);
@@ -132,11 +137,57 @@ public class InventoryServlet extends HttpServlet
                     request.setAttribute("editcategory", toEdit.getCategory().getCategoryName());
                     request.setAttribute("editname", toEdit.getItemName());
                     request.setAttribute("editprice", toEdit.getPrice());
+                    session.setAttribute("id", selected);
                 } catch (Exception ex)
                 {
                     Logger.getLogger(InventoryServlet.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 request.setAttribute("add", 0);
+                break;
+            case "edititem":
+                    
+                String editName = request.getParameter("itemname");
+                String editPrice = request.getParameter("itemprice");
+                String editCategory = request.getParameter("category");
+
+                if(checkBlank(editName, editPrice))
+                {
+                    request.setAttribute("message", "Item fields are blank.");
+                    request.setAttribute("add", 1);
+                    return;
+                }
+
+                if(checkPrice(editPrice))
+                {
+                    request.setAttribute("message", "Please enter a number.");
+                    request.setAttribute("add", 1);
+                    return;
+                }
+
+                try
+                {
+                    newCategory = inv.getCategory(editCategory);
+
+                    Item toEdit = inv.getItem((String) session.getAttribute("id"));
+                    session.removeAttribute("id");
+                    
+                    toEdit.setCategory(newCategory);
+                    toEdit.setItemName(editName);
+                    toEdit.setPrice(Double.parseDouble(editPrice));
+                    
+                    sessionUsername = (String) session.getAttribute("username");
+                    row = inv.update(toEdit, sessionUsername);
+                    
+                    if(row == 1)
+                        request.setAttribute("message", "Item updated.");
+                    else
+                        request.setAttribute("message", "Item was not updated.");
+                } catch (Exception ex)
+                {
+                    Logger.getLogger(InventoryServlet.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                
+                request.setAttribute("add", 1);
                 break;
         }
     }

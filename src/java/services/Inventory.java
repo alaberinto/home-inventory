@@ -51,4 +51,13 @@ public class Inventory
         int id = Integer.parseInt(selected);
         return itemsDB.getItem(id);
     }
+
+    public int update(Item toEdit, String sessionUsername) throws Exception
+    {
+        if(!toEdit.getOwner().getUsername().equals(sessionUsername))
+        {
+            return 0;
+        }
+        return itemsDB.update(toEdit);
+    }
 }
