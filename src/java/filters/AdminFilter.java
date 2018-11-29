@@ -37,9 +37,11 @@ public class AdminFilter implements Filter
             User user = new User();
             String sessionUsername = (String) session.getAttribute("username");
             
-            try {
+            try
+            {
                 user = us.getUser(sessionUsername);
-            } catch (Exception ex) {
+            } catch (Exception ex)
+            {
                 Logger.getLogger(AdminFilter.class.getName()).log(Level.SEVERE, null, ex);
             }
             

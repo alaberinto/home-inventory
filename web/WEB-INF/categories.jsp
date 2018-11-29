@@ -24,8 +24,23 @@
                 <tr>
                     <td>${category.categoryID}</td>
                     <td>${category.categoryName}</td>
+                    <td>
+                        <form method="post">
+                            <input type="submit" value="Edit Category Name">
+                            <input type="hidden" name="action" value="pullcategory">
+                            <input type="hidden" name="selected" value="${category.categoryID}"> 
+                        </form>
+                    </td>
                 </tr>
             </c:forEach>
         </table>
+
+        <h3>Add Category</h3>
+        <form method="post">
+            Category Name: <input type="text" name="addcategory" value="${editcategory}">
+            <input type="submit" value ="Add">
+            <input type="hidden" name="action" value="addcategory">
+        </form>
+        ${message}
     </body>
 </html>

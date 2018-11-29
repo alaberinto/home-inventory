@@ -118,7 +118,7 @@ public class InventoryServlet extends HttpServlet
                     newItem.setPrice(Double.parseDouble(price));
                     newItem.setOwner(owner);
                 
-                    row = inv.insert(newItem);
+                    row = inv.insertItem(newItem);
                     if(row == 1)
                         request.setAttribute("message", "Item added.");
                     else
@@ -176,7 +176,7 @@ public class InventoryServlet extends HttpServlet
                     toEdit.setPrice(Double.parseDouble(editPrice));
                     
                     sessionUsername = (String) session.getAttribute("username");
-                    row = inv.update(toEdit, sessionUsername);
+                    row = inv.updateItem(toEdit, sessionUsername);
                     
                     if(row == 1)
                         request.setAttribute("message", "Item updated.");
@@ -196,7 +196,7 @@ public class InventoryServlet extends HttpServlet
                     
                     sessionUsername = (String) session.getAttribute("username");
                     
-                    row = inv.delete(toDelete, sessionUsername);
+                    row = inv.deleteItem(toDelete, sessionUsername);
                     
                     if(row == 1)
                         request.setAttribute("message", "Item deleted.");

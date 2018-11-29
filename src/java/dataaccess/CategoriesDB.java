@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
 
 /**
  *
@@ -47,6 +48,28 @@ public class CategoriesDB
         {
             Logger.getLogger(CategoriesDB.class.getName()).log(Level.SEVERE, "Cannot read category", ex);
             throw new DBException("Error getting category");
+        } finally
+        {
+            em.close();
+        }
+    }
+
+    public int insert(Category toAdd) throws DBException
+    {
+        EntityManager em = DBUtil.getEmFactory().createEntityManager();
+        EntityTransaction trans = em.getTransaction();
+        
+        try
+        {
+            trans.begin();
+            em.persist(toAdd);
+            trans.commit();
+            return 1;
+        } catch (Exception ex)
+        {
+            trans.rollback();
+            Logger.getLogger(CategoriesDB.class.getName()).log(Level.SEVERE, "Cannot insert " + toAdd.toString(), ex);
+            throw new DBException("Error inserting item");
         } finally
         {
             em.close();

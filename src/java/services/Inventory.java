@@ -41,7 +41,12 @@ public class Inventory
         return categoriesDB.getCategory(name);
     }
     
-    public int insert(Item toAdd) throws Exception
+    public int insertCategory(Category toAdd) throws Exception
+    {
+        return categoriesDB.insert(toAdd);
+    }
+    
+    public int insertItem(Item toAdd) throws Exception
     {
         return itemsDB.insert(toAdd);
     }
@@ -52,7 +57,7 @@ public class Inventory
         return itemsDB.getItem(id);
     }
 
-    public int update(Item toEdit, String sessionUsername) throws Exception
+    public int updateItem(Item toEdit, String sessionUsername) throws Exception
     {
         if(!toEdit.getOwner().getUsername().equals(sessionUsername))
         {
@@ -61,7 +66,7 @@ public class Inventory
         return itemsDB.update(toEdit);
     }
 
-    public int delete(Item toDelete, String sessionUsername) throws Exception
+    public int deleteItem(Item toDelete, String sessionUsername) throws Exception
     {
         if(!toDelete.getOwner().getUsername().equals(sessionUsername))
         {

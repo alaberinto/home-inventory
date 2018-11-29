@@ -42,6 +42,9 @@ public class CategoriesServlet extends HttpServlet
     {
         Inventory inv = new Inventory();
         List<Category> categoryList = new ArrayList<>();
+        String action = request.getParameter("action");
+        
+        doAction(request, response, action);
         
         try
         {
@@ -52,5 +55,38 @@ public class CategoriesServlet extends HttpServlet
         }
         request.setAttribute("categories", categoryList);
         getServletContext().getRequestDispatcher("/WEB-INF/categories.jsp").forward(request, response);
+    }
+
+    private void doAction(HttpServletRequest request, HttpServletResponse response, String action)
+    {
+        int row = 0;
+        Inventory inv = new Inventory();
+        String selected = request.getParameter("selected");
+        switch (action)
+        {
+            case "addcategory":
+                String toAdd = request.getParameter("addcategory");
+                
+                Category newCategory = new Category();
+                newCategory.setCategoryName(toAdd);
+
+                try
+                {
+                    row = inv.insertCategory(newCategory);
+                } catch (Exception ex)
+                {
+                    Logger.getLogger(CategoriesServlet.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                if (row == 1)
+                    request.setAttribute("message", "Category added.");
+                else
+                    request.setAttribute("message", "Category was not added.");
+                break;
+            case "pullcategory":
+                request.setAttribute("editcategory", this);
+                break;
+            case "editcategory":
+                break;
+        }
     }
 }
