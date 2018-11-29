@@ -41,6 +41,11 @@ public class Inventory
         return categoriesDB.getCategory(name);
     }
     
+    public Category getCategory(int id) throws Exception
+    {
+        return categoriesDB.getCategory(id);
+    }
+    
     public int insertCategory(Category toAdd) throws Exception
     {
         return categoriesDB.insert(toAdd);
@@ -73,5 +78,10 @@ public class Inventory
             return 0;
         }
         return itemsDB.delete(toDelete);
+    }
+
+    public int updateCategory(Category newCategory) throws Exception
+    {
+        return categoriesDB.update(newCategory);
     }
 }

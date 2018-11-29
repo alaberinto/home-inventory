@@ -26,6 +26,7 @@ public class CategoriesDB
         try
         {
             List<Category> categories = em.createNamedQuery("Category.findAll", Category.class).getResultList();
+            
             return categories;
         } catch (Exception ex)
         {
@@ -42,7 +43,7 @@ public class CategoriesDB
         EntityManager em = DBUtil.getEmFactory().createEntityManager();
         try
         {
-            Category findCategory = em.createNamedQuery("Category.findByCategoryName", Category.class).setParameter("categoryName", name).getSingleResult();
+            Category findCategory = em.find(Category.class, name);
             return findCategory;
         } catch (Exception ex)
         {
@@ -54,6 +55,24 @@ public class CategoriesDB
         }
     }
 
+    
+    public Category getCategory(int id) throws DBException
+    {
+        EntityManager em = DBUtil.getEmFactory().createEntityManager();
+        try
+        {
+            Category findCategory = em.find(Category.class, id);
+            return findCategory;
+        } catch (Exception ex)
+        {
+            Logger.getLogger(CategoriesDB.class.getName()).log(Level.SEVERE, "Cannot read category", ex);
+            throw new DBException("Error getting category");
+        } finally
+        {
+            em.close();
+        }
+    }
+    
     public int insert(Category toAdd) throws DBException
     {
         EntityManager em = DBUtil.getEmFactory().createEntityManager();
@@ -70,6 +89,28 @@ public class CategoriesDB
             trans.rollback();
             Logger.getLogger(CategoriesDB.class.getName()).log(Level.SEVERE, "Cannot insert " + toAdd.toString(), ex);
             throw new DBException("Error inserting item");
+        } finally
+        {
+            em.close();
+        }
+    }
+
+    public int update(Category toEdit) throws DBException
+    {
+       EntityManager em = DBUtil.getEmFactory().createEntityManager();
+        EntityTransaction trans = em.getTransaction();
+        
+        try
+        {
+            trans.begin();
+            em.merge(toEdit);
+            trans.commit();
+            return 1;
+        } catch (Exception ex)
+        {
+            trans.rollback();
+            Logger.getLogger(CategoriesDB.class.getName()).log(Level.SEVERE, "Cannot update " + toEdit.toString(), ex);
+            throw new DBException("Error updating item");
         } finally
         {
             em.close();

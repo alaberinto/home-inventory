@@ -65,7 +65,7 @@
             Category:
             <select name="category" value="${category}">
                 <c:forEach var="category" items="${categories}">
-                    <option name="category" value="${category.categoryName}" ${category.categoryName == editcategory ? 'selected' : ''}>${category.categoryName}</option>
+                    <option name="category" value="${category.categoryID}" ${category.categoryName == editcategory ? 'selected' : ''}>${category.categoryName}</option>
                 </c:forEach>
             </select>
             <br>

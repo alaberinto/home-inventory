@@ -89,7 +89,7 @@ public class InventoryServlet extends HttpServlet
             case "additem":
                 String name = request.getParameter("itemname");
                 String price = request.getParameter("itemprice");
-                String category = request.getParameter("category");
+                int category = Integer.parseInt(request.getParameter("category"));
                 
                 if(checkBlank(name, price))
                 {

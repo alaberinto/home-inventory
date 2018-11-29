@@ -14,7 +14,9 @@
     </head>
     <body>
         <h1>Manage Categories</h1>
-        <a href="login?logout">Log out.</a>
+        <a href="categories">Manage Users</a>
+        <a href="inventory">Manage Inventory</a>
+        <a href="login?logout">Log out.</a><br>
         <table>
             <tr>
                 <th>Category ID</th>
@@ -35,11 +37,26 @@
             </c:forEach>
         </table>
 
-        <h3>Add Category</h3>
+        <c:choose>
+            <c:when test="${add == 1}">
+                <h3>Add Item</h3>
+            </c:when>
+            <c:when test="${add == 0}">
+                <h3>Edit Item</h3>
+            </c:when>
+        </c:choose>
         <form method="post">
             Category Name: <input type="text" name="addcategory" value="${editcategory}">
-            <input type="submit" value ="Add">
-            <input type="hidden" name="action" value="addcategory">
+            <c:choose>
+                <c:when test="${add == 1}">
+                    <input type="submit" value ="Add">
+                    <input type="hidden" name="action" value="addcategory">
+                </c:when>
+                <c:when test="${add == 0}">
+                    <input type="submit" value ="Edit">
+                    <input type="hidden" name="action" value="editcategory">
+                </c:when>
+            </c:choose>
         </form>
         ${message}
     </body>
