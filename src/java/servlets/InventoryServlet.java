@@ -1,6 +1,9 @@
 package servlets;
 
+import datamodels.Item;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -16,12 +19,8 @@ public class InventoryServlet extends HttpServlet
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException 
     {
-        String registered = request.getParameter("registered");
         
-        if(registered != null)
-        {
-            request.setAttribute("message", "User registered successfully!");
-        }
+        List<Item> itemList;
         getServletContext().getRequestDispatcher("/WEB-INF/inventory.jsp").forward(request, response);
     }
     
