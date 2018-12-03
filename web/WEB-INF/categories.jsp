@@ -14,8 +14,7 @@
     </head>
     <body>
         <h1>Manage Categories</h1>
-        <h2>Hello, ${username}!</h2>
-        <a href="users">Manage Users</a>
+        <a href="categories">Manage Users</a>
         <a href="inventory">Manage Inventory</a>
         <a href="login?logout">Log out.</a><br>
         <table>
