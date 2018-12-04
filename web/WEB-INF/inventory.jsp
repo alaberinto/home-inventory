@@ -14,8 +14,11 @@
         <title>Manage Inventory</title>
     </head>
     <body>
-        <h1>Inventory</h1>
-        <a href="account">Account</a><br>
+        <h1>Manage Inventory</h1>
+        <h2>Hello, ${username}!</h2>
+        <a href="categories">Manage Categories</a><br>
+        <a href="users">Manage Users</a><br>
+        <a href="account">Manage Account</a><br>
         <a href="login?logout">Log out.</a><br>
         <table>
             <tr>
