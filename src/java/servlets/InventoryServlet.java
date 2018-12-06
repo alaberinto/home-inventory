@@ -193,7 +193,7 @@ public class InventoryServlet extends HttpServlet
                 try
                 {
                     Item toDelete = inv.getItem(selected);
-                    session.setAttribute("undo", toDelete);
+                    session.setAttribute("undoitem", toDelete);
                     
                     sessionUsername = (String) session.getAttribute("username");
                     
@@ -211,7 +211,7 @@ public class InventoryServlet extends HttpServlet
                 request.setAttribute("add", 1);
                 break;
             case "undodelete":
-                Item toUndo = (Item) session.getAttribute("undo");
+                Item toUndo = (Item) session.getAttribute("undoitem");
                 try
                 {
                     row = inv.insertItem(toUndo);

@@ -97,6 +97,7 @@ public class UsersServlet extends HttpServlet
                 try
                 {
                     User toDelete = us.getUser(selected);
+                    session.setAttribute("undouser", toDelete);
                     row = us.delete(toDelete, sessionUsername);
                     
                     //deleting self
@@ -237,6 +238,22 @@ public class UsersServlet extends HttpServlet
                     
                     if(row == 1)
                         request.setAttribute("action", "User demoted to regular user.");
+                } catch (Exception ex)
+                {
+                    Logger.getLogger(UsersServlet.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                request.setAttribute("add", 1);
+                break;
+            case "undodelete":
+                User toUndo = (User) session.getAttribute("undouser");
+                try
+                {
+                    row = us.insert(toUndo);
+
+                    if(row == 1)
+                        request.setAttribute("action", "Delete was undone.");
+                    else
+                        request.setAttribute("action", "Delete was not undone.");
                 } catch (Exception ex)
                 {
                     Logger.getLogger(UsersServlet.class.getName()).log(Level.SEVERE, null, ex);
