@@ -22,7 +22,6 @@
             <br>
             <br>
         </form>
-        
             New user? <a href="register">Register</a> now!
     </body>
 </html>

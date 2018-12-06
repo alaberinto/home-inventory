@@ -193,8 +193,10 @@ public class InventoryServlet extends HttpServlet
                 try
                 {
                     Item toDelete = inv.getItem(selected);
+                    session.setAttribute("undo", toDelete);
                     
                     sessionUsername = (String) session.getAttribute("username");
+                    
                     
                     row = inv.deleteItem(toDelete, sessionUsername);
                     
@@ -202,6 +204,22 @@ public class InventoryServlet extends HttpServlet
                         request.setAttribute("message", "Item deleted.");
                     else
                         request.setAttribute("message", "Item was not deleted.");
+                } catch (Exception ex)
+                {
+                    Logger.getLogger(InventoryServlet.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                request.setAttribute("add", 1);
+                break;
+            case "undodelete":
+                Item toUndo = (Item) session.getAttribute("undo");
+                try
+                {
+                    row = inv.insertItem(toUndo);
+                    
+                    if(row == 1)
+                        request.setAttribute("message", "Delete was undone.");
+                    else
+                        request.setAttribute("message", "Delete not undone.");
                 } catch (Exception ex)
                 {
                     Logger.getLogger(InventoryServlet.class.getName()).log(Level.SEVERE, null, ex);

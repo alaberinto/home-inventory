@@ -133,5 +133,11 @@
                 </c:when>
             </c:choose>
         </form>
+        <br>
+        <br>
+        <form method="post">
+            <input type="submit" value="Undo Delete User">
+            <input type="hidden" name="action" value="undodelete">
+        </form>
     </body>
 </html>

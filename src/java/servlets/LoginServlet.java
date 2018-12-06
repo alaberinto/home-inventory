@@ -1,6 +1,5 @@
 package servlets;
 
-import dataaccess.DBException;
 import datamodels.User;
 import java.io.IOException;
 import java.util.logging.Level;

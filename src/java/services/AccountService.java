@@ -2,6 +2,9 @@ package services;
 
 import dataaccess.UsersDB;
 import datamodels.User;
+import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
