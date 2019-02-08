@@ -17,7 +17,7 @@ public class UsersDB
     public User getUser(String username) throws DBException
     {
         EntityManager em = DBUtil.getEmFactory().createEntityManager();
-                try
+        try
         {
             User user = em.find(User.class, username);
             return user;
